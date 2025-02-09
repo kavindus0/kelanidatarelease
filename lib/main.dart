@@ -106,52 +106,48 @@ class _MyHomePageState extends State<MyHomePage> {
             const SizedBox(height: 50),
             // Generate buttons dynamically
             ...pdfs.map((pdf) => Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 5.0),
-                    child: ElevatedButton(
-                      //color: Colors.green,
-                      style: ButtonStyle(
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5),
-                          ),
+                  child: TextButton(
+                    //color: Colors.green,
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
                         ),
                       ),
+                    ),
 
-                      onPressed: () async {
-                        if (alYear.isNotEmpty && nic.isNotEmpty) {
-                          // protect my Data
-                          final String apiUrl =
-                              'https://mis.kln.ac.lk/storage/files/$alYear/$nic/${pdf['filename']}';
-                          final filePath =
-                              await downloadFile(apiUrl, pdf['filename']!);
-                          if (filePath != null) {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    PDFViewer(filePath: filePath),
-                              ),
-                            );
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Failed to download PDF.'),
-                              ),
-                            );
-                          }
+                    onPressed: () async {
+                      if (alYear.isNotEmpty && nic.isNotEmpty) {
+                        // protect my Data
+                        final String apiUrl =
+                            'https://mis.kln.ac.lk/storage/files/$alYear/$nic/${pdf['filename']}';
+                        final filePath =
+                            await downloadFile(apiUrl, pdf['filename']!);
+                        if (filePath != null) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  PDFViewer(filePath: filePath),
+                            ),
+                          );
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
-                              content:
-                                  Text('Please enter both A/L Year and NIC.'),
+                              content: Text('Failed to download PDF.'),
                             ),
                           );
                         }
-                      },
-                      child: Text(pdf['label']!),
-                    ),
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content:
+                                Text('Please enter both A/L Year and NIC.'),
+                          ),
+                        );
+                      }
+                    },
+                    child: Text(pdf['label']!),
                   ),
                 )),
           ],
