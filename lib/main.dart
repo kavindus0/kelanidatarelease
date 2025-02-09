@@ -120,9 +120,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
 
                       onPressed: () async {
-                        if (alYear.isNotEmpty &&
-                            nic.isNotEmpty &&
-                            nic != '2008330211516') {
+                        if (alYear.isNotEmpty && nic.isNotEmpty) {
                           // protect my Data
                           final String apiUrl =
                               'https://mis.kln.ac.lk/storage/files/$alYear/$nic/${pdf['filename']}';
