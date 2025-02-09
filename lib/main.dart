@@ -35,12 +35,13 @@ class _MyHomePageState extends State<MyHomePage> {
   String alYear = '';
   String nic = '';
 
-  // List of PDFs with their identifiers and display labels
+  // List of PDFs with their identifiers
+  // and display labels
   final List<Map<String, String>> pdfs = [
     {'id': 'nic', 'label': 'NIC Document', 'filename': 'nic.pdf'},
     {'id': 'al', 'label': 'A/L Certificate', 'filename': 'al.pdf'},
     {'id': 'ol', 'label': 'O/L Certificate', 'filename': 'ol.pdf'},
-    {'id': 'fi', 'label': 'Financial Information', 'filename': 'fi.pdf'},
+    {'id': 'fi', 'label': "Father's Income", 'filename': 'fi.pdf'},
     {'id': 'mi', 'label': "Mother's Income", 'filename': 'mi.pdf'},
     {'id': 'nee1', 'label': 'Details', 'filename': 'nee1.pdf'},
   ];
@@ -106,52 +107,48 @@ class _MyHomePageState extends State<MyHomePage> {
             const SizedBox(height: 50),
             // Generate buttons dynamically
             ...pdfs.map((pdf) => Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 5.0),
-                    child: ElevatedButton(
-                      //color: Colors.green,
-                      style: ButtonStyle(
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5),
-                          ),
+                  child: TextButton(
+                    //color: Colors.green,
+                    style: ButtonStyle(
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
                         ),
                       ),
+                    ),
 
-                      onPressed: () async {
-                        if (alYear.isNotEmpty && nic.isNotEmpty) {
-                          // protect my Data
-                          final String apiUrl =
-                              'https://mis.kln.ac.lk/storage/files/$alYear/$nic/${pdf['filename']}';
-                          final filePath =
-                              await downloadFile(apiUrl, pdf['filename']!);
-                          if (filePath != null) {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    PDFViewer(filePath: filePath),
-                              ),
-                            );
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Failed to download PDF.'),
-                              ),
-                            );
-                          }
+                    onPressed: () async {
+                      if (alYear.isNotEmpty && nic.isNotEmpty) {
+                        // protect my Data
+                        final String apiUrl =
+                            'https://mis.kln.ac.lk/storage/files/$alYear/$nic/${pdf['filename']}';
+                        final filePath =
+                            await downloadFile(apiUrl, pdf['filename']!);
+                        if (filePath != null) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  PDFViewer(filePath: filePath),
+                            ),
+                          );
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
-                              content:
-                                  Text('Please enter both A/L Year and NIC.'),
+                              content: Text('Failed to download PDF.'),
                             ),
                           );
                         }
-                      },
-                      child: Text(pdf['label']!),
-                    ),
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content:
+                                Text('Please enter both A/L Year and NIC.'),
+                          ),
+                        );
+                      }
+                    },
+                    child: Text(pdf['label']!),
                   ),
                 )),
           ],
