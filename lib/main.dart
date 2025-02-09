@@ -35,7 +35,8 @@ class _MyHomePageState extends State<MyHomePage> {
   String alYear = '';
   String nic = '';
 
-  // List of PDFs with their identifiers and display labels
+  // List of PDFs with their identifiers
+  // and display labels
   final List<Map<String, String>> pdfs = [
     {'id': 'nic', 'label': 'NIC Document', 'filename': 'nic.pdf'},
     {'id': 'al', 'label': 'A/L Certificate', 'filename': 'al.pdf'},
