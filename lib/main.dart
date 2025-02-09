@@ -40,7 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
     {'id': 'nic', 'label': 'NIC Document', 'filename': 'nic.pdf'},
     {'id': 'al', 'label': 'A/L Certificate', 'filename': 'al.pdf'},
     {'id': 'ol', 'label': 'O/L Certificate', 'filename': 'ol.pdf'},
-    {'id': 'fi', 'label': 'Financial Information', 'filename': 'fi.pdf'},
+    {'id': 'fi', 'label': "Father's Income", 'filename': 'fi.pdf'},
     {'id': 'mi', 'label': "Mother's Income", 'filename': 'mi.pdf'},
     {'id': 'nee1', 'label': 'Details', 'filename': 'nee1.pdf'},
   ];
